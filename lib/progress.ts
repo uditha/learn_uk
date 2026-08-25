@@ -1,37 +1,14 @@
 import type { Item, Module, ProgressState } from "./types";
 import { ALL } from "./curriculum";
+import { emptyProgress, parseProgress } from "./progress-logic.mjs";
+export {
+  emptyProgress,
+  isEmptyProgress,
+  mergeProgress,
+  parseProgress,
+} from "./progress-logic.mjs";
 
 export const PROGRESS_KEY = "runway:v2";
-
-export function emptyProgress(): ProgressState {
-  return { done: {}, weak: {} };
-}
-
-export function parseProgress(raw: string | null | undefined): ProgressState {
-  if (!raw) return emptyProgress();
-  try {
-    const parsed = JSON.parse(raw) as Partial<ProgressState>;
-    return {
-      done: parsed.done && typeof parsed.done === "object" ? parsed.done : {},
-      weak: parsed.weak && typeof parsed.weak === "object" ? parsed.weak : {},
-    };
-  } catch {
-    return emptyProgress();
-  }
-}
-
-export function mergeProgress(a: ProgressState, b: ProgressState): ProgressState {
-  const done = { ...a.done };
-  for (const [id, score] of Object.entries(b.done)) {
-    const prev = done[id];
-    if (!prev || score.right >= prev.right) done[id] = score;
-  }
-  const weak = { ...a.weak };
-  for (const [key, n] of Object.entries(b.weak)) {
-    weak[key] = Math.max(weak[key] || 0, n);
-  }
-  return { done, weak };
-}
 
 export function qKey(modId: string, i: number) {
   return `${modId}#${i}`;
