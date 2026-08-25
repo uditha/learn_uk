@@ -37,6 +37,8 @@ export type Topic = {
 export type ProgressState = {
   done: Record<string, { right: number; total: number }>;
   weak: Record<string, number>;
+  updatedAt?: number;
+  epoch?: number;
 };
 
 export type Item = { mod: Module; idx: number; card: Card };

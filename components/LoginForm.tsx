@@ -54,7 +54,8 @@ export default function LoginForm({ error }: { error?: boolean }) {
         <SealMark />
         <h1>The Regulatory Runway</h1>
         <p className="lede">
-          FRE1 in bite-size cards. Enter the password to pick up where you left off.
+          FRE1 in bite-size cards. Enter the password on your phone, laptop, or tablet
+          to pick up where you left off.
         </p>
         <form onSubmit={onSubmit}>
           <label htmlFor="password">Password</label>

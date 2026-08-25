@@ -69,7 +69,7 @@ export default function StudyApp() {
   const SRef = useRef(S);
   SRef.current = S;
 
-  function persist(next: ProgressState) {
+  function persist(next: ProgressState, replace = false) {
     setS(next);
     saveLocalProgress(next);
     if (persistTimer.current) clearTimeout(persistTimer.current);
@@ -77,8 +77,16 @@ export default function StudyApp() {
       fetch("/api/progress", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(next),
-      }).catch(() => {});
+        body: JSON.stringify({ ...next, replace }),
+      })
+        .then(async (res) => {
+          if (!res.ok) return;
+          const saved = parseProgress(JSON.stringify(await res.json()));
+          const merged = mergeProgress(SRef.current, saved);
+          setS(merged);
+          saveLocalProgress(merged);
+        })
+        .catch(() => {});
     }, 250);
   }
 
@@ -269,7 +277,7 @@ export default function StudyApp() {
             onSharpen={() =>
               startRun(shuffle(weakItems(S)).slice(0, 12), { kind: "sharpen", title: "Sharpen" })
             }
-            onReset={() => persist(emptyProgress())}
+            onReset={() => persist(emptyProgress(), true)}
           />
         ) : screen === "run" && meta ? (
           <Runner
@@ -406,7 +414,7 @@ function Home({
       <button className="reset" onClick={onReset}>
         Clear all progress
       </button>
-      <p className="sync-note">Progress is saved on this device and in your session</p>
+      <p className="sync-note">Progress syncs across every device you sign in on</p>
     </div>
   );
 }
