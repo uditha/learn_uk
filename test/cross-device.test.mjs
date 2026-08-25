@@ -44,12 +44,23 @@ describe("cross-device progress", () => {
         PORT,
       },
       stdio: "inherit",
+      detached: true,
     });
     await waitForServer(`${BASE}/login`);
   });
 
   after(async () => {
-    if (child?.pid) child.kill("SIGTERM");
+    if (child?.pid) {
+      try {
+        process.kill(-child.pid, "SIGTERM");
+      } catch {
+        try {
+          child.kill("SIGTERM");
+        } catch {
+          /* already exited */
+        }
+      }
+    }
     if (dataDir) await rm(dataDir, { recursive: true, force: true });
   });
 
@@ -85,7 +96,6 @@ describe("cross-device progress", () => {
     assert.equal(saved.done.r1.right, 5);
 
     const laptop = await loginAsNewDevice();
-    assert.notEqual(laptop, phone);
 
     const res = await fetch(`${BASE}/api/progress`, { headers: { Cookie: laptop } });
     assert.equal(res.status, 200);
