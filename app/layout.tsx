@@ -3,7 +3,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "The Regulatory Runway",
-  description: "FRE1 in 90-second cards for UK financial regulation.",
+  description: "FRE1 and FRE2 in 90-second cards for UK financial regulation.",
   applicationName: "The Regulatory Runway",
   robots: { index: false, follow: false },
   appleWebApp: {

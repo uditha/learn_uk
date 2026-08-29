@@ -1,12 +1,12 @@
 # The Regulatory Runway
 
-A private Vercel app for learning FRE1 (UK financial regulation) as 90-second cards, taken from the original Regulatory Runway notes.
+A private Vercel app for learning FRE1 and FRE2 (UK financial regulation) as 90-second cards, taken from the original Regulatory Runway notes.
 
 ## Features
 
 - Password gate (not indexed by search engines)
 - Works on phone, tablet, and laptop — add it to your home screen if you like
-- All nine FRE1 topics plus an FRE2 preview
+- All eight FRE1 topics plus the four FRE2 topics
 - Mixed drill and a Sharpen pile for questions you miss
 - Progress syncs across every device you sign in on
 

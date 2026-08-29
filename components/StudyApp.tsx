@@ -252,7 +252,7 @@ export default function StudyApp() {
         <Seal pct={pct} />
         <div>
           <h1>The Regulatory Runway</h1>
-          <p>FRE1 in 90-second cards, checked line by line against the 2025/26 text.</p>
+          <p>FRE1 and FRE2 in 90-second cards, checked against the 2025/26 texts.</p>
         </div>
         <form className="top-actions" action="/api/logout" method="post">
           <button className="ghost-link" type="submit">
